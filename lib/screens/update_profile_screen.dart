@@ -13,6 +13,8 @@ import '../models/update_profile_model.dart';
 import '../providers/auth_provider.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
+  static const String routeName = '/update_profile';
+
   const UpdateProfileScreen({super.key});
 
   @override

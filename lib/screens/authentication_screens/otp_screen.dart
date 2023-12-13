@@ -4,6 +4,7 @@ import 'package:chargemod/models/auth_verify_model.dart';
 import 'package:chargemod/screens/authentication_screens/update_profile.dart';
 import 'package:chargemod/screens/error_screen.dart';
 import 'package:chargemod/screens/home_screens/main_screen.dart';
+import 'package:chargemod/screens/update_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pin_code_fields/flutter_pin_code_fields.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -50,7 +51,7 @@ verify(int otp)async{
     final auth = Provider.of<AuthProvider>(context, listen: false);
     AuthVerifyModel? verification = await auth.verifyOTP(otp: (otp));
     if(verification!.data!.isNewUser==true){
-      navigator.pushReplacementNamed(UpdateProfile.routeName);
+      navigator.pushReplacementNamed(UpdateProfileScreen.routeName);
     }
     else if(verification.data!.isNewUser==false){
       navigator.pushReplacementNamed( MainScreen.routeName);

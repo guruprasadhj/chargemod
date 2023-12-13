@@ -6,6 +6,7 @@ import '../screens/authentication_screens/update_profile.dart';
 import '../screens/error_screen.dart';
 import '../screens/authentication_screens/login_screen.dart';
 import '../screens/splash_screen.dart';
+import '../screens/update_profile_screen.dart';
 
 class RoutesGenerator{
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -31,9 +32,9 @@ class RoutesGenerator{
         return MaterialPageRoute(
             settings: settings, builder: (_) => const ErrorScreen());
 
-      case UpdateProfile.routeName:
+      case UpdateProfileScreen.routeName:
         return MaterialPageRoute(
-            settings: settings, builder: (_) => const UpdateProfile());
+            settings: settings, builder: (_) => const UpdateProfileScreen());
 
       default:
         return MaterialPageRoute(
