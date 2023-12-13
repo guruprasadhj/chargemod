@@ -4,6 +4,7 @@ import 'package:chargemod/configs/secure_storage.dart';
 import 'package:chargemod/models/user_details.dart';
 import 'package:chargemod/services/login_services.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../models/auth_verify_model.dart';
 import '../models/update_profile_model.dart';
@@ -80,22 +81,27 @@ class AuthProvider extends ChangeNotifier {
 
   Future<AuthVerifyModel?> verifyOTP({required int otp}) async {
     updateIsLoading(true);
-    var data =
-    await LoginServices.verifyPhoneOTP(otp: otp, phone: _phoneNumber);
-    log("verifyPhoneOTP Data: $data");
-    _authVerifyModel = AuthVerifyModel.fromJson(data);
-    if (_authVerifyModel!.data!.refreshToken!.isNotEmpty) {
-      _refreshToken = _authVerifyModel!.data!.refreshToken!;
-      log("_refreshToken:$_refreshToken");
-      await SecureStorage.writeRefreshToken(_refreshToken);
+    try{
+      var data =
+          await LoginServices.verifyPhoneOTP(otp: otp, phone: _phoneNumber);
+      log("verifyPhoneOTP Data: $data");
+      _authVerifyModel = AuthVerifyModel.fromJson(data);
+      if (_authVerifyModel!.data!.refreshToken!.isNotEmpty) {
+        _refreshToken = _authVerifyModel!.data!.refreshToken!;
+        log("_refreshToken:$_refreshToken");
+        await SecureStorage.writeRefreshToken(_refreshToken);
+      }
+      if (_authVerifyModel!.data!.accessToken!.isNotEmpty) {
+        _accessToken = _authVerifyModel!.data!.accessToken!;
+        log("_accessToken:$_accessToken");
+        await SecureStorage.writeAccessToken(_accessToken);
+      }
+      updateIsLoading(false);
+      return _authVerifyModel;
+    }catch(e){
+      Fluttertoast.showToast(msg: "OTP Failed. Please Retry Again.");
+      updateIsLoading(false);
     }
-    if (_authVerifyModel!.data!.accessToken!.isNotEmpty) {
-      _accessToken = _authVerifyModel!.data!.accessToken!;
-      log("_accessToken:$_accessToken");
-      await SecureStorage.writeAccessToken(_accessToken);
-    }
-    updateIsLoading(false);
-    return _authVerifyModel;
   }
 
   Future<UserDetailsModel?> getUserDetails() async {

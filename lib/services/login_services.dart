@@ -69,7 +69,7 @@ class LoginServices {
       Map<String, dynamic> body = {
         "refreshToken": refreshToken,
       };
-      var data = await networking.postRequest(endpoint: "/logout", body: body);
+      var data = await networking.postRequest(endpoint: "/logout", body: body,customURL: "https://as-uat.console.chargemod.com/temporary/sde1flutterATSR/64941897fdb322dbf94ad2b8/6494141957d29409895704d2/logout");
       return data;
     }catch(e){
       rethrow;

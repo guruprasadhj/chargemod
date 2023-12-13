@@ -58,6 +58,7 @@ class Networking {
     }
 
     Uri url = Uri.parse(urlStr);
+    log(url.toString());
     String status = 'error';
     String details = '';
     Map<String, String> headers = {
