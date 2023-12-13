@@ -30,9 +30,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   initData(){
     final auth = Provider.of<AuthProvider>(context, listen: false);
     log("message:${auth.user!.firstName}");
-    firstNameTextController.text = "${auth.user!.firstName}";
-    lastNameTextController.text = "${auth.user!.lastName}";
-    emailTextController.text = "${auth.user!.email}";
+    firstNameTextController.text = auth.user!.firstName??"";
+    lastNameTextController.text = auth.user!.lastName??"";
+    emailTextController.text = auth.user!.email??"";
 
   }
   @override
