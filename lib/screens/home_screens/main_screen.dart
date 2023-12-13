@@ -49,27 +49,37 @@ initData()async{
   }
   @override
   Widget build(BuildContext context) {
+
+    bool isDarkMode =
+    ((MediaQuery.of(context).platformBrightness) == Brightness.dark);
     return Scaffold(
+      backgroundColor:
+      isDarkMode ? kDarkBackgroundColor : kLightBackgroundColor,
       body: screens[currentIndex],
         bottomNavigationBar: Wrap(
           children: [
             BottomNavigationBar(
+               backgroundColor:
+        isDarkMode ? kDarkBackgroundColor : kLightBackgroundColor,
+
               type: BottomNavigationBarType.fixed,
+            unselectedItemColor:isDarkMode ? kLightBackgroundColor  : kDarkBackgroundColor,
               items:  <BottomNavigationBarItem>[
+
                 BottomNavigationBarItem(
-                  icon: SvgPicture.asset("assets/svg/home-icon.svg",height: 20,colorFilter: ColorFilter.mode((0==currentIndex)?kPrimaryColor:kDarkBackgroundColor, BlendMode.srcIn)),
+                  icon: SvgPicture.asset("assets/svg/home-icon.svg",height: 20,colorFilter: ColorFilter.mode((0==currentIndex)?kPrimaryColor:isDarkMode ? kLightBackgroundColor  : kDarkBackgroundColor, BlendMode.srcIn)),
                   label: 'Home',
                 ),
                 BottomNavigationBarItem(
-                  icon: SvgPicture.asset("assets/svg/activity-icon.svg",height: 20,colorFilter: ColorFilter.mode((1==currentIndex)?kPrimaryColor:kDarkBackgroundColor, BlendMode.srcIn)),
+                  icon: SvgPicture.asset("assets/svg/activity-icon.svg",height: 20,colorFilter: ColorFilter.mode((1==currentIndex)?kPrimaryColor:isDarkMode ? kLightBackgroundColor  : kDarkBackgroundColor, BlendMode.srcIn)),
                   label: 'Activity',
                 ),
                 BottomNavigationBarItem(
-                  icon: SvgPicture.asset("assets/svg/community-icon.svg",height: 20,colorFilter: ColorFilter.mode((2==currentIndex)?kPrimaryColor:kDarkBackgroundColor, BlendMode.srcIn)),
+                  icon: SvgPicture.asset("assets/svg/community-icon.svg",height: 20,colorFilter: ColorFilter.mode((2==currentIndex)?kPrimaryColor:isDarkMode ? kLightBackgroundColor  : kDarkBackgroundColor, BlendMode.srcIn)),
                   label: 'Community',
                 ),
                 BottomNavigationBarItem(
-                  icon: SvgPicture.asset("assets/svg/profile-icon.svg",height: 20,colorFilter: ColorFilter.mode((3==currentIndex)?kPrimaryColor:kDarkBackgroundColor, BlendMode.srcIn)),
+                  icon: SvgPicture.asset("assets/svg/profile-icon.svg",height: 20,colorFilter: ColorFilter.mode((3==currentIndex)?kPrimaryColor:isDarkMode ? kLightBackgroundColor  : kDarkBackgroundColor, BlendMode.srcIn)),
                   label: 'Profile',
                 ),
               ],

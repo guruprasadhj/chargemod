@@ -89,6 +89,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         controller: firstNameTextController,
                           labelText: 'First Name',
                           hintText: 'First Name',
+                        color: isDarkMode?Colors.white:Colors.black,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'This field can\'t be empty';
@@ -100,6 +101,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         controller: lastNameTextController,
                           labelText: 'Last name',
                           hintText: 'Last name',
+                          color:
+                          isDarkMode?Colors.white:Colors.black,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'This field can\'t be empty';
@@ -111,6 +114,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         controller: emailTextController,
                           labelText: 'E-mail',
                           hintText: 'email',
+                        color: isDarkMode?Colors.white:Colors.black,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'This field can\'t be empty';
@@ -129,12 +133,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           children: [
                             Text(
                               'Phone Number',
-                              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                              style:  TextStyle(color: isDarkMode?Colors.white:Colors.black,fontSize: 12, fontWeight: FontWeight.w600),
                             ),
                             SizedBox(height: 16,),
                             Text(
                               "${auth.user?.mobile}",
-                              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                              style:  TextStyle(color: isDarkMode?Colors.white:Colors.black,fontSize: 12, fontWeight: FontWeight.w400),
                             ),
                           ],
                         ),
@@ -146,11 +150,11 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text("Completing Your Profile",
-                              style: TextStyle(fontSize: 17,fontWeight: FontWeight.w400),textAlign: TextAlign.center,
+                              style: TextStyle(color: isDarkMode?Colors.white:Colors.black,fontSize: 17,fontWeight: FontWeight.w400),textAlign: TextAlign.center,
                             ),
                             Text(
                               "This action will reflect in your activities and payments after saving. we ask\n for email details for recieving monthly activity and notifications.",
-                            style: TextStyle(fontSize: 8,fontWeight: FontWeight.w400),
+                            style: TextStyle(color: isDarkMode?Colors.white:Colors.black,fontSize: 8,fontWeight: FontWeight.w400),
                             ),
                             SizedBox(
                                 width: 312,

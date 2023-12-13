@@ -24,11 +24,13 @@ void main()async{
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
   ]);
+
   runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return  MultiProvider(
@@ -54,9 +56,7 @@ class MyApp extends StatelessWidget {
               title: 'Flutter Demo',
                 theme: Styles.themeData(false, context),
 
-              darkTheme: ThemeData(
-
-              ),
+              darkTheme: Styles.themeData(false, context),
               themeMode: ThemeMode.system,
               onGenerateRoute: RoutesGenerator.generateRoute,
               home: const SplashScreen(),

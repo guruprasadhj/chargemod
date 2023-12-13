@@ -18,7 +18,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    bool isDarkMode =
+    ((MediaQuery.of(context).platformBrightness) == Brightness.dark);
     return Scaffold(
+      backgroundColor:
+      isDarkMode ? kDarkBackgroundColor : kLightBackgroundColor,
       body: Consumer<AuthProvider>(builder: (context, auth, child) {
           return SafeArea(
             child: SingleChildScrollView(
@@ -43,7 +48,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.black),),
+                                  color: isDarkMode? Colors.white:Colors.black
+                              ),),
 
                             Container(
                               width: 312,
@@ -51,6 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               padding: EdgeInsets.all(19),
                               margin: EdgeInsets.symmetric(vertical: 20),
                               decoration: BoxDecoration(
+
                                 borderRadius: BorderRadius.circular(5),
                                 image: DecorationImage(
                                     image: AssetImage(

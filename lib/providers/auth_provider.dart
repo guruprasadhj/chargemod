@@ -40,6 +40,10 @@ class AuthProvider extends ChangeNotifier {
     _isLoading = value;
     notifyListeners();
   }
+  updateAccessToken(String value) {
+    _accessToken = value;
+    notifyListeners();
+  }
 
   Future<String?> getAccessToken() async {
     String? refreshTkn = await SecureStorage.getRefreshToken();
@@ -49,6 +53,7 @@ class AuthProvider extends ChangeNotifier {
     if (refreshTkn != null) {
       var data =
       await LoginServices.refreshAccessToken(refreshToken: refreshTkn);
+      _accessToken = data["data"]["accessToken"];
       print("access token is\n$_accessToken");
       _refreshTime = DateTime.now();
       notifyListeners();

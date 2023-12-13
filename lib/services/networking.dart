@@ -3,10 +3,14 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:chargemod/models/error_model.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 import '../configs/enums.dart';
+import '../configs/secure_storage.dart';
 import '../providers/auth_provider.dart';
+import 'login_services.dart';
 
 class Networking {
   String baseUrl = 'https://as-uat.console.chargemod.com';
@@ -17,6 +21,20 @@ class Networking {
     String accessToken = AuthProvider.accessToken;
     return accessToken.toString();
   }
+  static Future<String> getNewAccessToken() async {
+    String? refreshTkn = await SecureStorage.getRefreshToken();
+    String? accessTkn = await SecureStorage.getaccessToken();
+    if (refreshTkn != null) {
+      var data =
+      await LoginServices.refreshAccessToken(refreshToken: refreshTkn);
+      String accessToken = data["data"]["accessToken"];
+      print("access token is\n$accessToken");
+      return accessToken.toString();
+    }else{
+      throw "ERROR in Refresh TOken";
+    }
+  }
+
 
   Future<bool> testServerConnection() async {
     try {
@@ -50,7 +68,6 @@ class Networking {
       headers.addAll(customHeaders);
     }
     try {
-      log("Endpoint:$url");
       http.Response response = await http
           .post(
             url,
@@ -62,6 +79,23 @@ class Networking {
       String data = response.body;
       var jsonDecoded = jsonDecode(data);
       log("json Decoded - $jsonDecoded");
+      if (response.statusCode == 401) {
+        String? newAccessToken = await getNewAccessToken();
+        Map<String, String> newHeaders = {
+          "Content-Type": "application/json",
+          "Authorization":"Bearer $newAccessToken"
+        };
+        http.Response newResponse = await http
+            .post(
+          url,
+          headers: newHeaders,
+          body: jsonEncode(body),
+        )
+            .timeout(const Duration(seconds: 59));
+        data = newResponse.body;
+        jsonDecoded = jsonDecode(data);
+      }
+
       /*if (jsonDecoded.containsKey("stack")) {
         var jsonError = jsonDecoded["stack"];
 
@@ -88,6 +122,7 @@ class Networking {
             "Please fix your internet connection or check if app is allowed to access internet",
       );
     } on ErrorModel catch (e) {
+
       log(e.toString());
       throw ErrorModel(
         //return ErrorModel(
@@ -131,6 +166,21 @@ class Networking {
       String data = response.body;
       var jsonDecoded = jsonDecode(data);
       log("json Decoded - $jsonDecoded");
+      if (response.statusCode == 401) {
+        String? newAccessToken = await getNewAccessToken();
+        Map<String, String> newHeaders = {
+          "Content-Type": "application/json",
+          "Authorization":"Bearer $newAccessToken"
+        };
+        http.Response newResponse = await http
+            .get(
+          url,
+          headers: newHeaders,
+        )
+            .timeout(const Duration(seconds: 59));
+        data = newResponse.body;
+        jsonDecoded = jsonDecode(data);
+      }
       return jsonDecoded;
     } on SocketException catch (e) {
       log(e.toString());

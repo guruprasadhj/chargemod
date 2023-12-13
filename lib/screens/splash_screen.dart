@@ -31,6 +31,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   void checkServerConnection() async {
     final navigator = Navigator.of(context);
+    final auth = Provider.of<AuthProvider>(context, listen: false);
     final connectivityResult = await (Connectivity().checkConnectivity());
     bool isConnected = false;
     if (connectivityResult == ConnectivityResult.mobile) {
@@ -61,10 +62,9 @@ class _SplashScreenState extends State<SplashScreen>
     if (networkStatus == NetworkStatus.stable) {
        userId = await SecureStorage.getUserId();
        if( userId != null){
-         final auth = Provider.of<AuthProvider>(context, listen: false);
          await auth.getAccessToken();
 
-         navigator.pushNamed(MainScreen.routeName);
+         navigator.pushReplacementNamed(MainScreen.routeName);
        }else{
          navigator.pushReplacement(
              MaterialPageRoute(builder: (context) => const OnBoardingScreen()));

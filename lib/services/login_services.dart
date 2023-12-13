@@ -65,11 +65,15 @@ class LoginServices {
   }
   static Future<Map<String, dynamic>> logout(
       {required String refreshToken}) async {
-    Map<String, dynamic> body = {
-      "refreshToken": refreshToken,
-    };
-    var data = await networking.postRequest(endpoint: "/logout", body: body);
-    return data;
+    try{
+      Map<String, dynamic> body = {
+        "refreshToken": refreshToken,
+      };
+      var data = await networking.postRequest(endpoint: "/logout", body: body);
+      return data;
+    }catch(e){
+      rethrow;
+    }
   }
 
 }
